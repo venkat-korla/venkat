@@ -1,0 +1,244 @@
+<!doctype>
+<html>
+<head>
+<title>Angular Practices</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script src="angular.min.js" type="text/javascript"></script>
+</head>
+
+<style>
+
+body  {
+    background-image: url("mainbg.png");
+
+}
+.center {text-align:center;color:#001a66;text-shadow:5px 4px 18px #00ace6}
+.color {color:gray;margin:5px}
+li:active {background-color:#000}
+
+//@keyframes top{
+
+from {transform:translate(0px,-50px)}
+to {transform:translate(0px,0px)}
+
+}
+
+#anim {animation: top 2s}
+
+footer {background-color: #2d2d30;
+      color: #f5f5f5;
+      padding: 16px;
+	  }
+</style>
+<script>
+(function() {
+			
+	var app = angular.module('registration',[]);
+	app.controller('formCtrl',function($scope){
+		$scope.students = [
+		{firstname:'venkat',lastname:'reddy',gender:'male',phone:'7893165851',email:'venkat@gmail.com',address:'hyderabad'},
+		{firstname:'rose',lastname:'',gender:'female',phone:'2121222122',email:'rose@gmail.com',address:'vizag'},
+		];
+		$scope.user={};
+		$scope.submitStudent=function(abc){
+			//alert();
+			$scope.students.push($scope.user);
+			$scope.user={}
+		}
+		$scope.showUpdate = false; 
+		$scope.indexingvalue = 0;
+		$scope.editInfo=function(abc){
+		$scope.showUpdate = !$scope.showUpdate; 
+		$scope.indexingvalue = abc;
+			$scope.user.firstname=$scope.students[abc].firstname;
+			$scope.user.lastname=$scope.students[abc].lastname;
+			$scope.user.gender=$scope.students[abc].gender;
+			$scope.user.phone=$scope.students[abc].phone;
+			$scope.user.email=$scope.students[abc].email;
+			$scope.user.address=$scope.students[abc].address;
+		}
+	    $scope.removeItem = function (abc) {
+        $scope.students.splice(abc, 1);
+		}
+		$scope.clear=function(){
+		$scope.user={};
+		}
+		$scope.clear1=function(){
+		$scope.name='';
+		}
+		$scope.update = function(user){
+		$scope.showUpdate = !$scope.showUpdate;
+		$scope.students[$scope.indexingvalue].firstname = $scope.user.firstname;
+		$scope.students[$scope.indexingvalue].lastname = $scope.user.lastname;
+		$scope.students[$scope.indexingvalue].gender = $scope.user.gender;
+		$scope.students[$scope.indexingvalue].phone = $scope.user.phone;
+		$scope.students[$scope.indexingvalue].email = $scope.user.email;
+		$scope.students[$scope.indexingvalue].address = $scope.user.address;
+		alert('update');
+		$scope.user={};
+		//angular.copy(user,$scope.user);
+		}
+	});
+})();
+	
+
+</script>
+
+<body ng-app="registration" ng-controller="formCtrl">
+<div class="container" style="border:1px solid #ddd;box-shadow: 5px 5px 15px 5px #ddd;background-color:#fff">
+<form class="form-horizontal" novalidate role="form" name="myForm" ng-submit="submitted=true">
+	<div id="anim">
+		<h2 class="center">Sample Form</h2>
+	</div>
+	<div>
+<div>
+  <a href="file:///C:/Users/cvl-hyd/Desktop/CRUD/crud.html"><button type="button" class="btn btn-primary">Registration</button></a>
+  <a href="file:///C:/Users/cvl-hyd/Desktop/CRUD/login.html"><button type="button" class="btn btn-success">Login</button></a>
+</div>  
+	  <div class="panel panel-primary" style="margin-top:10px">
+	  <div class="panel-heading"><b>Registration</b></div>
+    </div>
+	<div style="background-color:#dff0d8;padding:10px;border:2px solid #ddd;box-shadow: 3px 3px 10px 3px #ddd;">
+	<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Firstname" data-label="Firstname" class="col-md-3 control-label">*FirstName :</label>
+                        <div class="col-md-9">
+                            <input data-field="Firstname" type="text" name="firstName" placeholder="Enter FirstName" class="form-control" id="firstname" ng-model="user.firstname" required>
+							<div  ng-if="myForm.firstName.$error.required && submitted" style="color:red">
+							Enter your firstname.
+							</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="LastName" data-label="LastName" class="col-md-3 control-label">LastName :<br>(optional)</label>
+                        <div class="col-md-9">
+                            <input data-field="LastName" type="text" name="lastName" placeholder="Enter LastName" class="form-control" id="LastName" ng-model="user.lastname"/>
+						</div>
+                    </div>
+                </div>
+			</div>
+	    <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Genderender" data-label="Gender" class="col-md-3 control-label">*Gender :</label>
+                    <div class="col-md-9">
+						<div class="radio-inline">
+                        <label> <input type="radio" value="male" name="gender" ng-model="user.gender" required/>Male<span></span> </label>
+						</div>
+						<div class="radio-inline">
+						<label> <input type="radio" value="female" name="gender" ng-model="user.gender" required/>Female<span></span> </label>
+						</div>
+						<div class="radio-inline">
+						<label> <input type="radio" value="others" name="gender" ng-model="user.gender" required/>Others<span></span> </label>
+						</div>						
+						<div  ng-if="myForm.gender.$error.required && submitted" style="color:red">
+						Select your gender
+						</div>
+					</div>
+				</div>
+            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Phone" data-label="Phone" class="col-md-3 control-label">*Phone :</label>
+                        <div class="col-md-9">
+                            <input data-field="Phone" type="text" name="phone" placeholder="Enter phone num" class="form-control" id="Phone" ng-model="user.phone" required/>
+							<div  ng-if="myForm.phone.$error.required && submitted" style="color:red">
+							Must enter your phone number
+							</div>
+                        </div>
+                    </div>
+                </div>
+		</div>	
+			<div class="row">
+				<div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Email" data-label="Email" class="col-md-3 control-label">*Email :</label>
+                        <div class="col-md-9">
+                            <input data-field="Email" type="email" name="email"  placeholder="Enter Email" class="form-control" id="Email" ng-model="user.email" required/>
+							<span  ng-show="myForm.email.$invalid" style="color:red">You must enter valid email</span>
+						</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Address" data-label="Address" class="col-md-3 control-label">*Address (city) :</label>
+                        <div class="col-md-9">
+                            <input data-field="Address" type="text" name="address" placeholder="Enter Address" class="form-control" id="Address" ng-model="user.address" required/>
+							<div  ng-if="myForm.address.$error.required && submitted" style="color:red">
+							Must enter your address
+							</div>
+                        </div>
+                    </div>
+                </div>
+			</div>	
+          <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="form-group">
+                        <button title="Submit" type="submit" ng-show="showUpdate == false" class="btn btn-primary" ng-click="myForm.$valid && submitStudent(students)">Submit</button>
+						<button ng-show="showUpdate == true" class="btn btn-primary" ng-click="update($index)">Update</button>
+                        <input title="Clear" type="button" class="btn btn-info" value="Clear" ng-click="clear()">
+                    </div>
+                </div>
+            </div>
+          <div class="row container">
+                <div class="pull-right" style="margin-right:20px">
+                  <b>Note:  </b><span style="color:red">(*) are mandatory fields to fill.</span>
+                </div>
+            </div>
+	</div>
+<hr>
+</form>
+
+<form class="form-horizontal" novalidate role="form" name="centreSearchForm">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group">
+                        <label for="Name" data-label="Name" class="col-md-3 control-label">Name :</label>
+                        <div class="col-md-6">
+                            <input data-field="Name" type="text" name="Name" placeholder="Search" class="form-control" id="Name" ng-model="name" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="row marT10">
+                <div class="col-md-12 text-center">
+                    <button title="Search" type="button" class="btn btn-primary marR15" ng-click="name1=name">Search</button>
+                    <input title="Clear" type="button" class="btn btn-info" value="Clear" ng-click="clear1()">
+                </div>
+            </div>
+
+</form>
+
+<div>
+<table class="table table-bordered table-striped">
+	<thead>
+		<th style="text-align:center" ng-click="orderBy|firstname">Name</th>
+		<th style="text-align:center">Gender</th>
+		<th style="text-align:center">Phone</th>
+		<th style="text-align:center">Email</th>
+		<th style="text-align:center">Address</th>
+		<th style="text-align:center">Actions</th>
+	</thead>
+	<tbody>
+	<tr ng-repeat="s in students | filter:name1">
+		<td>{{s.firstname}} {{s.lastname}}</td>
+		<td>{{s.gender}}</td>
+		<td>{{s.phone}}</td>
+		<td>{{s.email}}</td>
+		<td>{{s.address}}</td>
+		<td style="text-align:center"><span ng-click="editInfo($index)" class="glyphicon glyphicon-edit color"></span><span ng-click="removeItem($index)" class="glyphicon glyphicon-trash color"></span></td>
+	</tr>
+	</tbody> 
+<table>
+</div>
+  </div>
+  </div>
+  <footer class="text-center">
+<p style="color:white">footer content</p>
+</footer>
+</body>
+</html>
